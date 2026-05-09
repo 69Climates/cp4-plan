@@ -30,3 +30,8 @@ build/
 *.dmg
 *.deb
 *.AppImage
+
+# But keep Tauri icons (they must be committed)
+!src-tauri/icons/*.png
+!src-tauri/icons/*.ico
+!src-tauri/icons/*.icns
