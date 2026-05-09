@@ -15,9 +15,15 @@ const NotificationManager = (() => {
   // Permission management methods
   async function checkPermission() {
     if (!("Notification" in window)) {
+      console.warn("Notification API not available");
       return "denied";
     }
-    permissionStatus = Notification.permission;
+    
+    // Get current permission
+    const currentPermission = Notification.permission;
+    permissionStatus = currentPermission;
+    
+    console.log("Current notification permission:", currentPermission);
     return permissionStatus;
   }
 
@@ -29,13 +35,20 @@ const NotificationManager = (() => {
     }
     
     try {
+      console.log("Requesting notification permission...");
+      
+      // Request permission
       const result = await Notification.requestPermission();
       permissionStatus = result;
       
+      console.log("Permission request result:", result);
+      
       // If granted, schedule all reminders
       if (result === "granted") {
+        console.log("Permission granted! Scheduling reminders...");
         scheduleAllReminders();
       } else if (result === "denied") {
+        console.warn("Permission denied by user");
         handlePermissionDenied();
       }
       
@@ -312,10 +325,16 @@ const NotificationManager = (() => {
 
   // Initialization
   function init() {
-    checkPermission();
+    console.log("NotificationManager initializing...");
+    
+    // Check initial permission
+    checkPermission().then(status => {
+      console.log("Initial permission status:", status);
+    });
     
     // Check for notification support (Subtask 19.4)
     if (!checkNotificationSupport()) {
+      console.warn("Notifications not supported");
       return; // Exit early if notifications not supported
     }
     
@@ -334,6 +353,7 @@ const NotificationManager = (() => {
     
     // Schedule all reminders if permission granted
     if (permissionStatus === "granted") {
+      console.log("Permission already granted, scheduling reminders");
       scheduleAllReminders();
     }
     
