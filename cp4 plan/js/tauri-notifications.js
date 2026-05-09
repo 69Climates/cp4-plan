@@ -3,12 +3,23 @@
 
 const TauriNotifications = (() => {
   let isTauri = false;
+  let tauriAPI = null;
 
   // Detect if running in Tauri
   function detectTauri() {
     // Check for Tauri-specific globals
     isTauri = window.__TAURI__ !== undefined || 
               window.__TAURI_INTERNALS__ !== undefined;
+    
+    if (isTauri && window.__TAURI__) {
+      // Try to get the notification API
+      try {
+        tauriAPI = window.__TAURI__;
+      } catch (e) {
+        console.warn("Tauri API not fully available:", e);
+      }
+    }
+    
     return isTauri;
   }
 
@@ -17,14 +28,16 @@ const TauriNotifications = (() => {
     detectTauri();
     
     if (isTauri) {
-      console.log("Running in Tauri - native notifications enabled");
+      console.log("Running in Tauri - using Web Notification API with Tauri enhancements");
       
-      // In Tauri, notifications are automatically granted
-      // No need to request permission explicitly
+      // In Tauri, Web Notifications work automatically
+      // No need to override NotificationManager
+      // Just ensure permission is granted
       if (window.NotificationManager) {
-        // Force permission status to granted in Tauri
-        window.NotificationManager.checkPermission = async () => "granted";
-        window.NotificationManager.requestPermission = async () => "granted";
+        // Check if notifications are supported
+        if ("Notification" in window) {
+          console.log("Web Notifications available in Tauri");
+        }
       }
     }
   }
@@ -40,20 +53,23 @@ const TauriNotifications = (() => {
     }
 
     try {
-      // Use Tauri's native notification API if available
-      if (window.__TAURI__?.notification) {
-        await window.__TAURI__.notification.sendNotification({
-          title: title,
-          body: options.body || "",
-          icon: options.icon || ""
-        });
-      } else {
-        // Fallback to web API
-        new Notification(title, options);
+      // In Tauri v2, use the standard Web Notification API
+      // It's automatically handled by Tauri and shows native notifications
+      if ("Notification" in window) {
+        // Check permission
+        if (Notification.permission === "granted") {
+          new Notification(title, options);
+        } else if (Notification.permission === "default") {
+          // Request permission
+          const permission = await Notification.requestPermission();
+          if (permission === "granted") {
+            new Notification(title, options);
+          }
+        }
       }
     } catch (error) {
       console.error("Failed to send Tauri notification:", error);
-      // Fallback to web notification
+      // Fallback: try basic notification
       try {
         new Notification(title, options);
       } catch (e) {
@@ -70,9 +86,10 @@ const TauriNotifications = (() => {
   // Get permission status
   async function getPermissionStatus() {
     if (isTauri) {
-      return "granted"; // Tauri apps have automatic permission
+      // In Tauri, check Web Notification permission
+      return "Notification" in window ? Notification.permission : "denied";
     }
-    return Notification.permission;
+    return "Notification" in window ? Notification.permission : "denied";
   }
 
   return {
