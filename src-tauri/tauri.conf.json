@@ -23,18 +23,7 @@
       }
     ],
     "security": {
-      "csp": null,
-      "capabilities": [
-        {
-          "identifier": "main-capability",
-          "windows": ["main"],
-          "permissions": [
-            "core:default",
-            "shell:default",
-            "notification:default"
-          ]
-        }
-      ]
+      "csp": null
     }
   },
   "bundle": {
