@@ -1,7 +1,7 @@
 {
   "name": "cp4-plan",
   "version": "1.0.0",
-  "description": "CP4 Study Tracker PWA",
+  "description": "CP4 Study Tracker",
   "type": "module",
   "scripts": {
     "test": "node --test",

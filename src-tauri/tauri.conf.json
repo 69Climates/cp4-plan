@@ -1,7 +1,7 @@
 {
-  "productName": "CP4 Plan",
+  "productName": "CP4",
   "version": "1.0.0",
-  "identifier": "com.cp4plan.app",
+  "identifier": "com.cp4.app",
   "build": {
     "beforeDevCommand": "",
     "beforeBuildCommand": "",
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "CP4 Plan - Competitive Programming Tracker",
+        "title": "CP4 - Competitive Programming Tracker",
         "width": 1200,
         "height": 800,
         "minWidth": 800,
