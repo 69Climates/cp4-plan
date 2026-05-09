@@ -14,6 +14,12 @@ const NotificationManager = (() => {
 
   // Permission management methods
   async function checkPermission() {
+    // In Tauri, notifications are automatically granted
+    if (window.TauriNotifications?.isTauri()) {
+      permissionStatus = "granted";
+      return "granted";
+    }
+    
     if (!("Notification" in window)) {
       return "denied";
     }
@@ -22,6 +28,13 @@ const NotificationManager = (() => {
   }
 
   async function requestPermission() {
+    // In Tauri, notifications are automatically granted
+    if (window.TauriNotifications?.isTauri()) {
+      permissionStatus = "granted";
+      scheduleAllReminders();
+      return "granted";
+    }
+    
     if (!("Notification" in window)) {
       console.warn("Notifications not supported in this browser");
       handleServiceWorkerUnavailable();
@@ -167,7 +180,7 @@ const NotificationManager = (() => {
     };
 
     // Only add actions if service worker is available (not supported in all browsers/platforms)
-    if (canSnooze && "serviceWorker" in navigator && navigator.serviceWorker.controller) {
+    if (canSnooze && "serviceWorker" in navigator && navigator.serviceWorker.controller && !window.TauriNotifications?.isTauri()) {
       options.actions = [
         { action: "snooze-short", title: "5 min" },
         { action: "snooze-medium", title: "15 min" },
@@ -176,7 +189,10 @@ const NotificationManager = (() => {
     }
 
     try {
-      if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+      // Use Tauri notifications if available
+      if (window.TauriNotifications?.isTauri()) {
+        await window.TauriNotifications.sendNotification(habit.name, options);
+      } else if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
         const registration = await navigator.serviceWorker.ready;
         await registration.showNotification(habit.name, options);
       } else {
@@ -268,7 +284,13 @@ const NotificationManager = (() => {
     const iconUrl = `${baseUrl}/512_icon.png`;
     
     try {
-      if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+      // Use Tauri notifications if available
+      if (window.TauriNotifications?.isTauri()) {
+        await window.TauriNotifications.sendNotification("CP4 Habit Tracker", {
+          body: "Notifications are working! You'll receive reminders for your habits.",
+          icon: iconUrl
+        });
+      } else if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
         const registration = await navigator.serviceWorker.ready;
         await registration.showNotification("CP4 Habit Tracker", {
           body: "Notifications are working! You'll receive reminders for your habits.",
