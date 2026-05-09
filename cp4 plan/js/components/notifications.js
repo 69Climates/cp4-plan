@@ -259,10 +259,16 @@ const NotificationManager = (() => {
 
   // Test notification (for debugging)
   async function sendTestNotification() {
-    if (permissionStatus !== "granted") {
+    // Always check current permission status first
+    const currentPermission = await checkPermission();
+    
+    if (currentPermission !== "granted") {
+      console.log("Permission not granted, requesting...");
       const result = await requestPermission();
+      console.log("Permission request result:", result);
+      
       if (result !== "granted") {
-        return { success: false, message: "Permission denied" };
+        return { success: false, message: "Permission denied. Please enable notifications in your browser/system settings." };
       }
     }
 
@@ -270,6 +276,8 @@ const NotificationManager = (() => {
     const iconUrl = `${baseUrl}/512_icon.png`;
     
     try {
+      console.log("Attempting to send test notification...");
+      
       // Use standard Web Notification API
       // In Tauri, this shows native Windows notifications automatically
       if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
@@ -280,16 +288,25 @@ const NotificationManager = (() => {
           tag: "test-notification"
         });
       } else {
-        new Notification("CP4 Habit Tracker", {
+        // Direct notification (works in Tauri)
+        const notification = new Notification("CP4 Habit Tracker", {
           body: "Notifications are working! You'll receive reminders for your habits.",
           icon: iconUrl,
           tag: "test-notification"
         });
+        
+        // Handle notification click
+        notification.onclick = () => {
+          window.focus();
+          notification.close();
+        };
       }
+      
+      console.log("Test notification sent successfully");
       return { success: true, message: "Test notification sent" };
     } catch (error) {
       console.error("Test notification failed:", error);
-      return { success: false, message: error.message };
+      return { success: false, message: `Failed: ${error.message}` };
     }
   }
 
