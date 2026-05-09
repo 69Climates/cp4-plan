@@ -1,0 +1,59 @@
+<section class="page" id="stats-page">
+  <header class="page-header">
+    <h1 class="page-title">Stats</h1>
+    <span id="stats-total" class="badge">Overview</span>
+  </header>
+
+  <div id="stats-sections">
+    <section class="stats-block show" data-stats-key="overview">
+      <button class="stats-title" type="button">Overview</button>
+      <div class="stats-content">
+        <div class="grid-3" id="stats-overview-cards"></div>
+      </div>
+    </section>
+
+    <section class="stats-block" data-stats-key="pace">
+      <button class="stats-title" type="button">Pace Tracker</button>
+      <div class="stats-content">
+        <div id="pace-info-card" class="pace-info-card"></div>
+        <div class="chart-wrap" data-canvas-wrap="chart-pace"><canvas id="chart-pace"></canvas></div>
+      </div>
+    </section>
+
+    <section class="stats-block" data-stats-key="problems">
+      <button class="stats-title" type="button">Problems Analytics</button>
+      <div class="stats-content">
+        <div class="grid-2">
+          <div class="chart-wrap" data-canvas-wrap="chart-problem-status"><canvas id="chart-problem-status"></canvas></div>
+          <div class="chart-wrap" data-canvas-wrap="chart-problem-method"><canvas id="chart-problem-method"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-block" data-stats-key="contests">
+      <button class="stats-title" type="button">Contests</button>
+      <div class="stats-content">
+        <div class="chart-wrap" data-canvas-wrap="chart-contest-score"><canvas id="chart-contest-score"></canvas></div>
+      </div>
+    </section>
+
+    <section class="stats-block" data-stats-key="weeks">
+      <button class="stats-title" type="button">Weekly Report Cards</button>
+      <div class="stats-content" id="weekly-report-cards"></div>
+    </section>
+
+    <section class="stats-block" data-stats-key="tags">
+      <button class="stats-title" type="button">Tag Weakness</button>
+      <div class="stats-content">
+        <div class="table-wrap"><table><thead><tr><th>Tag</th><th>Count</th><th>Solo Rate</th></tr></thead><tbody id="tag-weakness-table"></tbody></table></div>
+      </div>
+    </section>
+
+    <section class="stats-block" data-stats-key="dead-days">
+      <button class="stats-title" type="button">Dead Days Heatmap</button>
+      <div class="stats-content">
+        <div id="stats-heatmap"></div>
+      </div>
+    </section>
+  </div>
+</section>

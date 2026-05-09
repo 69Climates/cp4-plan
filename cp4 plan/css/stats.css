@@ -1,0 +1,195 @@
+#stats-sections {
+  display: grid;
+  gap: var(--gap);
+}
+
+.stats-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.stats-title {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--text);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.stats-content {
+  display: none;
+  padding: 10px;
+  background: var(--card);
+}
+
+.stats-block.show .stats-content {
+  display: block;
+}
+
+.chart-wrap {
+  min-height: 260px;
+}
+
+.week-grade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card2);
+}
+
+
+/* Pace Tracker Enhancements */
+.pace-info-card {
+  background: var(--card2);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.pace-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pace-status-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.pace-status-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.pace-status.ahead .pace-status-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.pace-status.ahead .pace-status-text {
+  color: #16a34a;
+}
+
+.pace-status.on-track .pace-status-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.pace-status.on-track .pace-status-text {
+  color: #2563eb;
+}
+
+.pace-status.behind .pace-status-icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.pace-status.behind .pace-status-text {
+  color: #dc2626;
+}
+
+.pace-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.pace-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pace-label {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.pace-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.pace-value.positive {
+  color: #16a34a;
+}
+
+.pace-value.negative {
+  color: #dc2626;
+}
+
+.pace-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.pace-bar span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .pace-status.ahead .pace-status-icon {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+  }
+  
+  .pace-status.ahead .pace-status-text {
+    color: #4ade80;
+  }
+  
+  .pace-status.on-track .pace-status-icon {
+    background: rgba(37, 99, 235, 0.2);
+    color: #60a5fa;
+  }
+  
+  .pace-status.on-track .pace-status-text {
+    color: #60a5fa;
+  }
+  
+  .pace-status.behind .pace-status-icon {
+    background: rgba(220, 38, 38, 0.2);
+    color: #f87171;
+  }
+  
+  .pace-status.behind .pace-status-text {
+    color: #f87171;
+  }
+  
+  .pace-value.positive {
+    color: #4ade80;
+  }
+  
+  .pace-value.negative {
+    color: #f87171;
+  }
+}

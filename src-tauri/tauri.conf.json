@@ -1,0 +1,48 @@
+{
+  "productName": "CP4 Plan",
+  "version": "1.0.0",
+  "identifier": "com.cp4plan.app",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devUrl": "http://localhost:8000",
+    "frontendDist": "../cp4 plan"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "CP4 Plan - Competitive Programming Tracker",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "longDescription": "A comprehensive study tracker for Competitive Programming 4 book. Track your progress, manage problems, take notes, and monitor your learning journey.",
+    "shortDescription": "CP4 Study Tracker",
+    "category": "Education"
+  }
+}

@@ -1,0 +1,1212 @@
+/* ============================================
+   Habits Page Styles
+   ============================================ */
+
+/* ============================================
+   17.1 Base Styles - Layout and Views
+   ============================================ */
+
+/* Subtabs Navigation */
+#habits-subtabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.habits-tab-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  font-family: var(--font);
+  font-size: 0.95rem;
+}
+
+.habits-tab-btn:hover {
+  color: var(--text);
+}
+
+.habits-tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Panel Visibility */
+.habits-panel {
+  display: none;
+}
+
+.habits-panel.show {
+  display: block;
+  animation: reveal 0.2s ease;
+}
+
+/* ============================================
+   Daily View - Habit Cards
+   ============================================ */
+
+#habits-daily-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.habit-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.habit-card:hover {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card2));
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+}
+
+.habit-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.habit-checkbox {
+  margin-top: 4px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--success);
+  flex-shrink: 0;
+}
+
+.habit-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.habit-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.habit-icon {
+  font-size: 1.5em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.habit-name {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1rem;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.habit-description {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.habit-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* Color Accent Bar */
+.habit-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--habit-color, var(--primary));
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.habit-card {
+  position: relative;
+  padding-left: 15px;
+}
+
+/* ============================================
+   List View - Habit List Cards
+   ============================================ */
+
+#habits-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.habit-list-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  cursor: move;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.habit-list-card:hover {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card2));
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+  transform: translateY(-1px);
+}
+
+.habit-list-card[draggable="false"] {
+  cursor: default;
+}
+
+.habit-list-card.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.habit-list-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.habit-list-icon {
+  font-size: 2em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.habit-list-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.habit-list-info strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 1.05rem;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.habit-list-info p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.habit-list-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.habit-list-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Color indicator for list cards */
+.habit-list-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--habit-color, var(--primary));
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+/* ============================================
+   17.3 Streak Indicators and Progress Bars
+   ============================================ */
+
+.habit-streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: color-mix(in srgb, var(--warning) 20%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, var(--border));
+  color: color-mix(in srgb, var(--warning) 95%, var(--text));
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.habit-streak-badge::before {
+  content: '🔥';
+  font-size: 1.1em;
+}
+
+/* Progress Bar */
+.habit-progress {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.habit-progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, var(--success) 70%, var(--primary)),
+    var(--success)
+  );
+  transition: width 0.3s ease;
+  border-radius: 999px;
+}
+
+/* Animated progress bar for milestones */
+@keyframes progressPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.habit-progress-fill.milestone {
+  animation: progressPulse 1.5s ease-in-out infinite;
+}
+
+/* Milestone Celebration Animation */
+@keyframes celebrate {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+  50% {
+    transform: scale(1.3) rotate(5deg);
+  }
+  75% {
+    transform: scale(1.2) rotate(-3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.milestone-celebration {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  text-align: center;
+  animation: celebrate 0.6s ease-in-out;
+  pointer-events: none;
+}
+
+.milestone-celebration .milestone-icon {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.milestone-celebration .milestone-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.milestone-celebration .milestone-subtext {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ============================================
+   Stats View
+   ============================================ */
+
+#habits-stats-content {
+  margin-top: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.stat-card h4 {
+  margin: 0 0 6px 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ============================================
+   17.4 Heatmap Component
+   ============================================ */
+
+#habit-heatmap-container {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+#habit-heatmap-container h5 {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.habit-heatmap {
+  display: grid;
+  gap: 12px;
+}
+
+/* Month Navigation */
+.heatmap-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.heatmap-month-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.heatmap-nav-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+/* Heatmap Grid */
+.heatmap-grid-wrapper {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  min-width: fit-content;
+}
+
+.heatmap-weekdays {
+  display: grid;
+  grid-template-rows: repeat(7, 16px);
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--muted);
+  padding-top: 20px;
+}
+
+.heatmap-weekdays span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.heatmap-months {
+  display: grid;
+  grid-template-columns: repeat(var(--heatmap-cols, 31), 16px);
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.heatmap-cells {
+  display: grid;
+  grid-template-rows: repeat(7, 16px);
+  grid-template-columns: repeat(var(--heatmap-cols, 31), 16px);
+  grid-auto-flow: column;
+  gap: 3px;
+}
+
+.heatmap-cell {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--card2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.15);
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.heatmap-cell.empty {
+  border-color: transparent;
+  background: transparent;
+  cursor: default;
+}
+
+.heatmap-cell.empty:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Completion Density Colors */
+.heatmap-cell.completed {
+  background: color-mix(in srgb, var(--success) 60%, var(--card2));
+  border-color: color-mix(in srgb, var(--success) 40%, var(--border));
+}
+
+.heatmap-cell.incomplete {
+  background: var(--card2);
+  border-color: var(--border);
+}
+
+.heatmap-cell.future {
+  background: var(--card);
+  border-color: var(--border);
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Heatmap Tooltip */
+.heatmap-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  color: var(--text);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.heatmap-cell:hover .heatmap-tooltip {
+  opacity: 1;
+}
+
+.heatmap-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--border);
+}
+
+/* Heatmap Legend */
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.heatmap-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.heatmap-legend-box {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+}
+
+/* ============================================
+   17.5 Dashboard Widget
+   ============================================ */
+
+#dashboard-habits-widget {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
+}
+
+#dashboard-habits-widget h3 {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.dashboard-habit-list {
+  display: grid;
+  gap: 8px;
+}
+
+.dashboard-habit-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-habit-item:hover {
+  background: color-mix(in srgb, var(--primary) 5%, var(--card2));
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+}
+
+.dashboard-habit-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--success);
+  flex-shrink: 0;
+}
+
+.dashboard-habit-icon {
+  font-size: 1.3em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.dashboard-habit-name {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-habit-streak {
+  font-size: 0.78rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.dashboard-habits-progress {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.dashboard-habits-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dashboard-habits-progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.dashboard-habits-progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    color-mix(in srgb, var(--success) 70%, var(--primary)),
+    var(--success)
+  );
+  transition: width 0.3s ease;
+  border-radius: 999px;
+}
+
+/* ============================================
+   17.2 Habit Form Modal Styles
+   ============================================ */
+
+#modal-habit-form .modal-card {
+  max-width: 720px;
+}
+
+#habit-form {
+  display: grid;
+  gap: 14px;
+}
+
+#habit-form label {
+  display: grid;
+  gap: 6px;
+}
+
+#habit-form label > span:first-child {
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+#habit-form .input,
+#habit-form textarea,
+#habit-form select {
+  width: 100%;
+}
+
+#habit-form textarea {
+  resize: vertical;
+  min-height: 60px;
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+.error-message {
+  display: block;
+  color: color-mix(in srgb, var(--danger) 90%, var(--text));
+  font-size: 0.8rem;
+  min-height: 1em;
+  margin-top: 2px;
+}
+
+/* Input error state */
+.input.error,
+textarea.error,
+select.error {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 5%, var(--card));
+}
+
+.input.error:focus,
+textarea.error:focus,
+select.error:focus {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--danger) 20%, transparent);
+}
+
+/* Fieldset error state */
+fieldset.error {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 3%, var(--card2));
+}
+
+/* Fieldset Styling */
+#habit-form fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: var(--card2);
+}
+
+#habit-form legend {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0 6px;
+}
+
+/* Frequency Options */
+.frequency-options {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.weekday-selector {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.weekday-checkbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 50px;
+}
+
+.weekday-checkbox:hover {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+}
+
+.weekday-checkbox input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.weekday-checkbox input:checked ~ span {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.weekday-checkbox span {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* Radio Labels */
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  transition: background 0.2s ease;
+}
+
+.radio-label:hover {
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.radio-label input[type="radio"] {
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+/* Color Picker */
+.color-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.color-option {
+  cursor: pointer;
+  position: relative;
+}
+
+.color-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.color-swatch {
+  display: block;
+  width: 100%;
+  height: 44px;
+  border-radius: var(--radius);
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.color-option input:checked + .color-swatch {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--primary);
+  transform: scale(1.05);
+}
+
+.color-option:hover .color-swatch {
+  transform: scale(1.08);
+}
+
+/* Icon Picker */
+.icon-picker {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.icon-option {
+  cursor: pointer;
+  position: relative;
+}
+
+.icon-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  font-size: 1.5em;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  background: var(--card);
+}
+
+.icon-option input:checked + .icon-display {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 15%, var(--card));
+}
+
+.icon-option:hover .icon-display {
+  transform: scale(1.12);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+}
+
+/* Reminders List */
+#habit-reminders-list {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.reminder-item span {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.reminder-item button {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  margin-top: 14px;
+}
+
+.empty-state p {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   Loading States (Subtask 19.5)
+   ============================================ */
+
+.btn.loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  color: var(--text);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.btn:disabled,
+.btn.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner-large {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.loading-overlay .spinner-large {
+  border-color: var(--border);
+  border-top-color: var(--primary);
+}
+
+/* ============================================
+   17.6 Responsive Styles
+   ============================================ */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .heatmap-cells {
+    grid-template-columns: repeat(var(--heatmap-cols, 31), 18px);
+  }
+  
+  .heatmap-cell {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  #habits-daily-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .icon-picker {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+/* Mobile (320px - 767px) */
+@media (max-width: 767px) {
+  #habits-subtabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .habits-tab-btn {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+  }
+  
+  .habit-list-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .habit-list-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-value {
+    font-size: 1.6rem;
+  }
+  
+  .color-picker {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .icon-picker {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .weekday-selector {
+    justify-content: space-between;
+  }
+  
+  .weekday-checkbox {
+    min-width: 42px;
+    padding: 6px 4px;
+  }
+  
+  .weekday-checkbox span {
+    font-size: 0.75rem;
+  }
+  
+  #habit-form .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  .heatmap-grid-wrapper {
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+  
+  .dashboard-habit-name {
+    font-size: 0.85rem;
+  }
+  
+  .milestone-celebration .milestone-icon {
+    font-size: 3rem;
+  }
+  
+  .milestone-celebration .milestone-text {
+    font-size: 1.2rem;
+  }
+  
+  /* Ensure touch targets are 44x44px minimum */
+  .habit-checkbox,
+  .dashboard-habit-checkbox {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .icon-display {
+    min-height: 44px;
+  }
+  
+  .color-swatch {
+    min-height: 44px;
+  }
+  
+  .weekday-checkbox {
+    min-height: 44px;
+  }
+  
+  .btn,
+  .btn-xs {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+}
+
+/* Very small screens (320px) */
+@media (max-width: 374px) {
+  .habit-card {
+    padding: 10px;
+  }
+  
+  .habit-icon {
+    font-size: 1.3em;
+  }
+  
+  .habit-list-icon {
+    font-size: 1.6em;
+  }
+  
+  .icon-picker {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  
+  .color-picker {
+    gap: 6px;
+  }
+}

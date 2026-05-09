@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d2126">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>CP4</title>
+  <link rel="icon" type="image/png" sizes="72x72" href="72_icon.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="512_icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/weekplan.css">
+  <link rel="stylesheet" href="css/problems.css">
+  <link rel="stylesheet" href="css/contests.css">
+  <link rel="stylesheet" href="css/notes.css">
+  <link rel="stylesheet" href="css/stats.css">
+  <link rel="stylesheet" href="css/timer.css">
+  <link rel="stylesheet" href="css/habits.css">
+</head>
+<body class="app-locked">
+  <div id="install-banner" class="install-banner" style="display:none">
+    <span>Install CP4 for offline use</span>
+    <div class="install-actions">
+      <button id="install-btn" class="btn btn-primary" type="button">Install</button>
+      <button id="install-dismiss" class="btn" type="button">x</button>
+    </div>
+  </div>
+
+  <div id="app-lock-screen" class="app-lock-screen show" aria-hidden="false">
+    <div class="app-lock-card" role="dialog" aria-modal="true" aria-labelledby="app-lock-title">
+      <h1 id="app-lock-title">CP4 Locked</h1>
+      <p>Enter password to unlock your tracker.</p>
+      <form id="app-lock-form" class="form-grid app-lock-form" autocomplete="off">
+        <label>
+          <span>Password</span>
+          <input
+            id="app-lock-password"
+            class="input"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+            required
+          >
+        </label>
+        <p id="app-lock-error" class="lock-error" role="alert" aria-live="polite"></p>
+        <button id="app-unlock-btn" class="btn btn-primary" type="submit">Unlock</button>
+      </form>
+      <p class="muted app-lock-help">Press Ctrl + L anytime to lock instantly.</p>
+    </div>
+  </div>
+
+  <nav class="nav-shell">
+    <span class="logo" title="CP4">
+      <img class="logo-mark" src="72_icon.png" width="24" height="24" alt="CP4 icon">
+      CP4
+    </span>
+    <div class="tabs" role="tablist" aria-label="Main tabs">
+      <button class="tab-btn" data-tab="dashboard" type="button">Dashboard</button>
+      <button class="tab-btn" data-tab="weekplan" type="button">Week Plan</button>
+      <button class="tab-btn" data-tab="problems" type="button">Problems</button>
+      <button class="tab-btn" data-tab="contests" type="button">Contests</button>
+      <button class="tab-btn" data-tab="notes" type="button">Notes</button>
+      <button class="tab-btn" data-tab="stats" type="button">Stats</button>
+      <button class="tab-btn" data-tab="timer" type="button">Timer</button>
+      <button class="tab-btn" data-tab="habits" type="button">Habits</button>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrap">
+        <input id="global-search" class="input" placeholder="Search... (press /)" autocomplete="off">
+        <div id="search-results" class="search-results"></div>
+      </div>
+      <button id="settings-btn" class="icon-btn" type="button" title="Settings">Settings</button>
+      <button id="shortcuts-btn" class="icon-btn" type="button" title="Shortcuts">?</button>
+    </div>
+  </nav>
+
+  <main id="app-content" class="app-content" aria-live="polite"></main>
+
+  <button id="fab-add" class="fab" type="button" title="Add Problem (press +)">+</button>
+
+  <div id="modal-first-run" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Welcome to CP4</h2>
+      <p>Set your baseline first. Start date is required.</p>
+      <form id="first-run-form" class="form-grid">
+        <label>
+          <span>Start Date *</span>
+          <input id="first-start-date" class="input" type="date" required>
+        </label>
+        <label>
+          <span>Daily Problem Goal</span>
+          <input id="first-daily-goal" class="input" type="number" min="1" value="3">
+        </label>
+        <label>
+          <span>Daily Time Goal (minutes)</span>
+          <input id="first-time-goal" class="input" type="number" min="15" step="15" value="120">
+        </label>
+        <button class="btn btn-primary" type="submit">Start Tracking</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-settings" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Settings</h2>
+      <form id="settings-form" class="form-grid">
+        <label>
+          <span>Start Date</span>
+          <input id="settings-start-date" class="input" type="date" required>
+        </label>
+        <label>
+          <span>Daily Problem Goal</span>
+          <input id="settings-daily-goal" class="input" type="number" min="1">
+        </label>
+        <label>
+          <span>Daily Time Goal (minutes)</span>
+          <input id="settings-time-goal" class="input" type="number" min="15" step="15">
+        </label>
+        <div class="row-wrap">
+          <button class="btn btn-primary" type="submit">Save Settings</button>
+          <button id="open-doom-notes-from-settings" class="btn" type="button">Open DOOM NOTES</button>
+        </div>
+      </form>
+      <hr>
+      <div class="row-wrap">
+        <button id="export-data" class="btn" type="button">Export Data</button>
+        <label class="btn" for="import-data-input">Import Data</label>
+        <input id="import-data-input" type="file" accept="application/json" hidden>
+        <button id="reset-data" class="btn btn-danger" type="button">Reset All Data</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-doom-notes" class="modal modal-fullscreen" aria-hidden="true">
+    <div class="modal-card full">
+      <div class="row-wrap space-between">
+        <h2>DOOM NOTES</h2>
+        <div class="row-wrap">
+          <input id="doom-search-input" class="input input-sm" placeholder="Find in notes">
+          <button id="doom-search-prev" class="btn btn-xs" type="button">Prev</button>
+          <button id="doom-search-next" class="btn btn-xs" type="button">Next</button>
+          <button id="doom-copy" class="btn btn-xs" type="button">Copy</button>
+          <button id="doom-download" class="btn btn-xs" type="button">Download</button>
+          <button id="doom-preview-toggle" class="btn btn-xs" type="button">Preview</button>
+          <button id="doom-mono-toggle" class="btn btn-xs" type="button">Mono</button>
+          <button id="doom-full-toggle" class="btn btn-xs" type="button">Fullscreen</button>
+        </div>
+      </div>
+      <div class="doom-meta">
+        <span id="doom-word-count">0 words</span>
+        <span id="doom-char-count">0 chars</span>
+      </div>
+      <textarea id="doom-editor" class="doom-editor" spellcheck="false"></textarea>
+      <div id="doom-preview" class="doom-preview" style="display:none"></div>
+    </div>
+  </div>
+
+  <div id="modal-shortcuts" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Help Center</h2>
+      <div id="shortcuts-table-wrap"></div>
+      <hr>
+      <h3>Week Plan Legend</h3>
+      <p><strong>U/P/C</strong>: Understanding status where U = Understood, P = Partial, C = Confused.</p>
+      <p><strong>E/M/H</strong>: Difficulty level where E = Easy, M = Medium, H = Hard.</p>
+    </div>
+  </div>
+
+  <div id="modal-quick-add" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2>Quick Add Problem</h2>
+      <form id="quick-add-form" class="form-grid">
+        <label><span>Title</span><input id="qa-title" class="input" required></label>
+        <label>
+          <span>Platform</span>
+          <select id="qa-platform" class="input">
+            <option value="Codeforces">Codeforces</option>
+            <option value="Kattis">Kattis</option>
+            <option value="UVA">UVA</option>
+            <option value="LeetCode">LeetCode</option>
+            <option value="CodeChef">CodeChef</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label><span>Link (optional)</span><input id="qa-link" class="input" type="url" placeholder="https://..."></label>
+        <label>
+          <span>Tags (comma separated)</span>
+          <div class="tag-input-wrap">
+            <input id="qa-tags" class="input" placeholder="start typing tags">
+            <div id="qa-tag-suggestions" class="tag-suggest-list" aria-label="Tag suggestions"></div>
+          </div>
+        </label>
+        <label>
+          <span>Status</span>
+          <select id="qa-status" class="input">
+            <option value="solved">Solved</option>
+            <option value="upsolved">Upsolved</option>
+            <option value="attempted">Attempted</option>
+            <option value="unsolved">Unsolved</option>
+          </select>
+        </label>
+        <label>
+          <span>Solve Method</span>
+          <select id="qa-method" class="input">
+            <option value="solo">Solo</option>
+            <option value="hint">With Hint</option>
+            <option value="editorial">Editorial</option>
+            <option value="team">Team</option>
+          </select>
+        </label>
+        <label><span>Personal Rating (1-5)</span><input id="qa-rating" class="input" type="number" min="1" max="5" value="3"></label>
+        <label><span>Week #</span><input id="qa-week" class="input" type="number" min="1" max="14"></label>
+        <label><span>Book Reference</span><input id="qa-book-ref" class="input" placeholder="3.5 DP"></label>
+        <label><span>Key Insight</span><textarea id="qa-insight" class="input" rows="3"></textarea></label>
+        <label><span>Wrong Approaches</span><textarea id="qa-wrong" class="input" rows="3"></textarea></label>
+        <div class="row-wrap">
+          <button class="btn btn-primary" type="submit">Save (Ctrl+Enter)</button>
+          <button id="qa-cancel" class="btn" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-generic" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h2 id="generic-title">Notice</h2>
+      <div id="generic-body"></div>
+      <div class="row-wrap">
+        <button id="generic-ok" class="btn btn-primary" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-backdrop" class="backdrop"></div>
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <div id="quick-capture-popup" class="quick-capture" style="display:none">
+    <input id="quick-capture-input" class="input" placeholder="Quick note... (Enter to save)">
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/data/seed.js"></script>
+  <script src="js/components/modal.js"></script>
+  <script src="js/components/toast.js"></script>
+  <script src="js/components/search.js"></script>
+  <script src="js/components/pomodoro.js"></script>
+  <script src="js/components/session.js"></script>
+  <script src="js/components/doomnotes.js"></script>
+  <script src="js/components/heatmap.js?v=20260419h"></script>
+  <script src="js/components/tagheatmap.js"></script>
+  <script src="js/components/charts.js?v=20260419a"></script>
+  <script src="js/components/notifications.js"></script>
+  <script src="js/pages/dashboard.js?v=20260419c"></script>
+  <script src="js/pages/weekplan.js"></script>
+  <script src="js/pages/problems.js?v=20260419m"></script>
+  <script src="js/pages/contests.js"></script>
+  <script src="js/pages/notes.js"></script>
+  <script src="js/pages/stats.js?v=20260419a"></script>
+  <script src="js/pages/timer.js"></script>
+  <script src="js/pages/habits.js"></script>
+  <script src="js/app.js?v=20260419f"></script>
+</body>
+</html>

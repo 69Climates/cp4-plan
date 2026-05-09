@@ -1,0 +1,130 @@
+#timer-subtabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.timer-tab-btn {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.timer-tab-btn.active {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  background: color-mix(in srgb, var(--primary) 14%, var(--card));
+}
+
+.timer-panel {
+  display: none;
+}
+
+.timer-panel.show {
+  display: grid;
+  gap: 10px;
+}
+
+.timer-main {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+.timer-ring-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+}
+
+.timer-ring {
+  width: 240px;
+  height: 240px;
+  transform: rotate(-90deg);
+}
+
+.timer-ring-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 12;
+}
+
+.timer-ring-progress {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.25s linear;
+}
+
+.timer-ring-progress.pomo-break {
+  stroke: var(--muted);
+}
+
+.timer-ring-progress.session-ring {
+  stroke: color-mix(in srgb, var(--success) 70%, var(--text));
+}
+
+.timer-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 6px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.timer-readout {
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.03em;
+}
+
+.timer-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.timer-goal-badge {
+  font-size: 0.75rem;
+  color: var(--success);
+}
+
+.session-time {
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.session-goal-row {
+  width: min(280px, 100%);
+}
+
+@media (max-width: 760px) {
+  .timer-ring-wrap {
+    width: 210px;
+    height: 210px;
+  }
+
+  .timer-ring {
+    width: 210px;
+    height: 210px;
+  }
+
+  .timer-readout,
+  .session-time {
+    font-size: 1.75rem;
+  }
+}

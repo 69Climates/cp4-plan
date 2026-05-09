@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Viewer</title>
+    <style>
+      :root {
+        --bg: #f6f6f2;
+        --panel: #ffffff;
+        --ink: #1c1b1a;
+        --muted: #666159;
+        --stroke: #d9d3c9;
+        --accent: #1e7a53;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1200px 600px at 100% -10%, #ece9df 0%, rgba(236, 233, 223, 0) 70%),
+          linear-gradient(180deg, #f9f9f5 0%, var(--bg) 100%);
+      }
+
+      .viewer-wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 20px 16px 28px;
+      }
+
+      .viewer-head {
+        background: var(--panel);
+        border: 1px solid var(--stroke);
+        border-radius: 14px;
+        padding: 14px;
+        position: sticky;
+        top: 10px;
+        z-index: 10;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 1.3rem;
+      }
+
+      .viewer-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .viewer-actions a {
+        text-decoration: none;
+        color: #fff;
+        background: var(--accent);
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+
+      .viewer-status {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .viewer-pages {
+        margin-top: 20px;
+      }
+
+      .viewer-frame {
+        width: 100%;
+        min-height: calc(100vh - 240px);
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        background: #fff;
+      }
+
+      .page-sheet {
+        background: #fff;
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        margin: 0 auto 14px;
+        padding: 8px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        max-width: 100%;
+      }
+
+      .page-sheet canvas {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .viewer-fallback {
+        margin-top: 14px;
+        background: #fff;
+        border: 1px solid var(--stroke);
+        border-radius: 10px;
+        padding: 14px;
+      }
+
+      @media (max-width: 700px) {
+        .viewer-wrap {
+          padding: 12px 10px 20px;
+        }
+
+        h1 {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viewer-wrap">
+      <header class="viewer-head">
+        <h1 id="viewer-title">PDF Viewer</h1>
+        <div class="viewer-actions">
+          <a id="open-direct" href="#" target="_blank" rel="noopener noreferrer">Open Direct PDF</a>
+        </div>
+        <div id="viewer-status" class="viewer-status">Loading PDF...</div>
+      </header>
+
+      <main id="viewer-pages" class="viewer-pages"></main>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const file = params.get("file") || "";
+      const title = params.get("title") || "CP4 PDF";
+
+      const titleEl = document.getElementById("viewer-title");
+      const statusEl = document.getElementById("viewer-status");
+      const pagesEl = document.getElementById("viewer-pages");
+      const openDirectEl = document.getElementById("open-direct");
+
+      function setStatus(text) {
+        statusEl.textContent = text;
+      }
+
+      function setLinks(pdfPath) {
+        openDirectEl.href = pdfPath;
+      }
+
+      function showFallback(message) {
+        const box = document.createElement("section");
+        box.className = "viewer-fallback";
+        box.textContent = message;
+        pagesEl.innerHTML = "";
+        pagesEl.appendChild(box);
+      }
+
+      function mountFrame(pdfPath) {
+        pagesEl.innerHTML = "";
+        setStatus("Opened in a new tab. If preview is blocked by browser settings, use Open Direct PDF.");
+
+        const frame = document.createElement("iframe");
+        frame.className = "viewer-frame";
+        frame.src = pdfPath;
+        frame.title = `${title} PDF`;
+        let settled = false;
+
+        frame.addEventListener("load", () => {
+          settled = true;
+          setStatus("Opened in this tab. If your browser still downloads PDF files, use Open Direct PDF.");
+        });
+
+        frame.addEventListener("error", () => {
+          settled = true;
+          setStatus("Inline preview failed in this browser. Use Open Direct PDF.");
+        });
+
+        window.setTimeout(() => {
+          if (!settled) {
+            setStatus("Inline preview may be blocked by browser PDF settings. Use Open Direct PDF above.");
+          }
+        }, 2000);
+
+        pagesEl.appendChild(frame);
+
+        const hint = document.createElement("section");
+        hint.className = "viewer-fallback";
+        hint.textContent = "If preview is blank, use Open Direct PDF above. This page still opens in a new tab as requested.";
+        pagesEl.appendChild(hint);
+      }
+
+      function init() {
+        const safe = file.startsWith("/assets/pdfs/") ? file : "";
+        titleEl.textContent = title;
+        document.title = `${title} | PDF Viewer`;
+
+        if (!safe) {
+          setStatus("Invalid PDF path.");
+          showFallback("The requested PDF path is invalid.");
+          openDirectEl.removeAttribute("href");
+          return;
+        }
+
+        setLinks(safe);
+        mountFrame(safe);
+      }
+
+      init();
+    </script>
+  </body>
+</html>

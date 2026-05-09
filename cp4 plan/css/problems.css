@@ -1,0 +1,133 @@
+#problem-list {
+  display: grid;
+  gap: 8px;
+}
+
+.problem-row {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.problem-head {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.9fr 0.8fr auto;
+  gap: 8px;
+  align-items: center;
+  background: var(--card2);
+  padding: 8px;
+}
+
+.problem-expand {
+  display: none;
+  padding: 10px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+.problem-row.show .problem-expand {
+  display: grid;
+  gap: 8px;
+}
+
+.quick-add-bar {
+  position: relative;
+  z-index: 5;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+#problem-quick-bar {
+  gap: 10px;
+  margin-top: 6px;
+}
+
+#problem-quick-bar.collapsed {
+  display: none;
+}
+
+#problem-quick-bar label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+#problem-quick-bar label span {
+  color: var(--muted);
+}
+
+.tag-input-wrap {
+  position: relative;
+}
+
+.tag-suggest-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  display: none;
+  z-index: 30;
+  max-height: 190px;
+  overflow: auto;
+  padding: 4px;
+  gap: 3px;
+}
+
+.tag-suggest-list.show {
+  display: grid;
+}
+
+.tag-suggest-item {
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text);
+  padding: 5px 7px;
+  cursor: pointer;
+}
+
+.tag-suggest-item:hover {
+  border-color: var(--border);
+  background: var(--card2);
+}
+
+.tag-suggest-item.is-active {
+  border-color: var(--border);
+  background: var(--card2);
+}
+
+#problems-cf-heatmap .cf-heatmap {
+  margin-top: 8px;
+}
+
+#problems-cf-heatmap .cf-map-body {
+  overflow-x: auto;
+}
+
+.tag-heatmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.tag-cell {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 960px) {
+  .problem-head {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,52 @@
+<section class="page" id="contests-page">
+  <header class="page-header">
+    <h1 class="page-title">Contests</h1>
+    <span id="contest-count" class="badge">0 contests</span>
+  </header>
+
+  <article class="card">
+    <h3>Upsolving Queue</h3>
+    <div id="upsolve-queue" class="upsolve-list"></div>
+  </article>
+
+  <article class="accordion" id="contest-add-accordion">
+    <button class="accordion-header" type="button">Add Contest</button>
+    <div class="accordion-body">
+      <form id="contest-form" class="form-grid">
+        <label><span>Name</span><input id="contest-name" class="input" required></label>
+        <label><span>Date</span><input id="contest-date" class="input" type="date" required></label>
+        <label>
+          <span>Platform</span>
+          <select id="contest-platform" class="input">
+            <option value="Codeforces">Codeforces</option>
+            <option value="CodeChef">CodeChef</option>
+            <option value="LeetCode">LeetCode</option>
+            <option value="AtCoder">AtCoder</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label><span>Rank</span><input id="contest-rank" class="input" type="number" min="1"></label>
+        <label><span>Solved / Total</span><input id="contest-score" class="input" placeholder="3/6"></label>
+        <label><span>Problems (one per line: id|status|editorialRead)</span><textarea id="contest-problems" class="input" rows="5" placeholder="A|solved|true"></textarea></label>
+        <button class="btn btn-primary" type="submit">Save Contest</button>
+      </form>
+    </div>
+  </article>
+
+  <article class="card">
+    <h3>Contest History</h3>
+    <div class="row-wrap" style="margin-bottom: 1rem;">
+      <input id="contest-search-text" class="input" placeholder="Search contests (name, platform, problems...)" style="flex: 2;">
+      <select id="contest-sort" class="input">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="score_desc">Best Score</option>
+        <option value="rank_asc">Best Rank</option>
+      </select>
+    </div>
+    <p class="muted" style="margin-top: 0; margin-bottom: 1rem; font-size: 0.875rem;">
+      💡 Tip: Search supports fuzzy matching across contest names, platforms, and problem IDs
+    </p>
+    <div id="contests-list"></div>
+  </article>
+</section>

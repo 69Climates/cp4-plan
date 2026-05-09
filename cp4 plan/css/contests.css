@@ -1,0 +1,25 @@
+#contests-list {
+  display: grid;
+  gap: 8px;
+}
+
+.contest-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 10px;
+  display: grid;
+  gap: 10px;
+}
+
+.upsolve-list {
+  display: grid;
+  gap: 8px;
+}
+
+.upsolve-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--warning) 7%, var(--card));
+  padding: 8px;
+}

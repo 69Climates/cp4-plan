@@ -1,0 +1,106 @@
+<section class="page" id="problems-page">
+  <header class="page-header">
+    <h1 class="page-title">Problems</h1>
+    <div class="row-wrap">
+      <span id="problem-count" class="badge">0 problems</span>
+      <button id="problem-open-modal" class="btn" type="button">Quick Add</button>
+    </div>
+  </header>
+
+  <div class="quick-add-bar card">
+    <div class="row-wrap space-between">
+      <strong>Add Problem</strong>
+      <button id="problem-inline-toggle" class="btn btn-xs" type="button" aria-expanded="false">Show Form</button>
+    </div>
+
+    <form id="problem-quick-bar" class="form-grid collapsed">
+      <div class="grid-2">
+        <label><span>Title</span><input id="pqb-title" class="input" placeholder="Problem title" required></label>
+        <label>
+          <span>Platform</span>
+          <select id="pqb-platform" class="input">
+            <option value="Codeforces">Codeforces</option>
+            <option value="Kattis">Kattis</option>
+            <option value="UVA">UVA</option>
+            <option value="LeetCode">LeetCode</option>
+            <option value="CodeChef">CodeChef</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+      <div class="grid-2">
+        <label><span>Link (optional)</span><input id="pqb-link" class="input" type="url" placeholder="https://..."></label>
+        <label>
+          <span>Tags (comma separated)</span>
+          <div class="tag-input-wrap">
+            <input id="pqb-tags" class="input" placeholder="start typing tags">
+            <div id="pqb-tag-suggestions" class="tag-suggest-list" aria-label="Tag suggestions"></div>
+          </div>
+        </label>
+      </div>
+      <div class="grid-3">
+        <label>
+          <span>Status</span>
+          <select id="pqb-status" class="input">
+            <option value="solved">Solved</option>
+            <option value="upsolved">Upsolved</option>
+            <option value="attempted">Attempted</option>
+            <option value="unsolved">Unsolved</option>
+          </select>
+        </label>
+        <label>
+          <span>Solve Method</span>
+          <select id="pqb-method" class="input">
+            <option value="solo">Solo</option>
+            <option value="hint">With Hint</option>
+            <option value="editorial">Editorial</option>
+            <option value="team">Team</option>
+          </select>
+        </label>
+        <label><span>Personal Rating (1-5)</span><input id="pqb-rating" class="input" type="number" min="1" max="5" value="3"></label>
+      </div>
+      <div class="grid-2">
+        <label><span>Week #</span><input id="pqb-week" class="input" type="number" min="1" max="14"></label>
+        <label><span>Book Reference</span><input id="pqb-book-ref" class="input" placeholder="3.5 DP"></label>
+      </div>
+      <label><span>Key Insight</span><textarea id="pqb-insight" class="input" rows="2"></textarea></label>
+      <label><span>Wrong Approaches</span><textarea id="pqb-wrong" class="input" rows="2"></textarea></label>
+      <div class="row-wrap">
+        <button class="btn btn-primary" type="submit">Add Problem</button>
+      </div>
+    </form>
+  </div>
+
+  <article class="card table-wrap">
+    <h3>Problems Heatmap</h3>
+    <p id="problems-heatmap-note" class="muted">Codeforces-style contribution view of solved problems.</p>
+    <div id="problems-cf-heatmap"></div>
+  </article>
+
+  <article class="card">
+    <h3>Search & Filter Problems</h3>
+    <div class="row-wrap">
+      <input id="problem-search-text" class="input" placeholder="Search problems (title, tags, platform, insights...)" style="flex: 2;">
+      <select id="problem-filter-status" class="input">
+        <option value="all">All statuses</option>
+        <option value="solved">Solved</option>
+        <option value="upsolved">Upsolved</option>
+        <option value="attempted">Attempted</option>
+        <option value="unsolved">Unsolved</option>
+      </select>
+      <select id="problem-sort" class="input">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="rating_desc">Rating high-low</option>
+        <option value="rating_asc">Rating low-high</option>
+      </select>
+    </div>
+    <p class="muted" style="margin-top: 0.5rem; font-size: 0.875rem;">
+      💡 Tip: Search supports fuzzy matching - try partial words or abbreviations
+    </p>
+  </article>
+
+  <article class="card table-wrap">
+    <div id="problem-list"></div>
+  </article>
+</section>

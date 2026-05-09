@@ -1,0 +1,312 @@
+<section class="page" id="habits-page">
+  <header class="page-header">
+    <h1 class="page-title">Habits</h1>
+    <div class="row-wrap">
+      <span id="habits-count" class="badge">0 habits</span>
+      <button id="habits-test-notification" class="btn btn-xs" type="button" title="Test notifications">🔔 Test</button>
+      <button id="habits-add-btn" class="btn" type="button">Add Habit</button>
+    </div>
+  </header>
+
+  <div id="habits-subtabs">
+    <button class="habits-tab-btn active" data-habits-tab="daily" type="button">Daily</button>
+    <button class="habits-tab-btn" data-habits-tab="list" type="button">List</button>
+    <button class="habits-tab-btn" data-habits-tab="stats" type="button">Stats</button>
+  </div>
+
+  <!-- Daily View -->
+  <section id="habits-panel-daily" class="habits-panel show">
+    <article class="card">
+      <div class="row-wrap space-between">
+        <h3>Today's Habits</h3>
+        <div class="row-wrap">
+          <input id="habits-date-picker" class="input input-sm" type="date">
+          <span id="habits-daily-progress" class="badge">0/0</span>
+        </div>
+      </div>
+      <div id="habits-daily-list"></div>
+    </article>
+  </section>
+
+  <!-- List View -->
+  <section id="habits-panel-list" class="habits-panel">
+    <article class="card">
+      <div class="row-wrap space-between">
+        <h3>All Habits</h3>
+        <div class="row-wrap">
+          <select id="habits-category-filter" class="input input-sm">
+            <option value="all">All Categories</option>
+          </select>
+          <button id="habits-show-archived" class="btn btn-xs" type="button">Show Archived</button>
+        </div>
+      </div>
+      <div id="habits-list"></div>
+    </article>
+  </section>
+
+  <!-- Stats View -->
+  <section id="habits-panel-stats" class="habits-panel">
+    <article class="card">
+      <div class="row-wrap space-between">
+        <h3>Statistics</h3>
+        <select id="habits-stats-selector" class="input input-sm">
+          <option value="">Select a habit...</option>
+        </select>
+      </div>
+      <div id="habits-stats-content"></div>
+    </article>
+  </section>
+</section>
+
+<!-- Habit Create/Edit Modal -->
+<div id="modal-habit-form" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h2 id="habit-form-title">Add Habit</h2>
+    <form id="habit-form" class="form-grid">
+      <label>
+        <span>Name *</span>
+        <input id="habit-name" class="input" maxlength="100" required>
+        <span class="error-message" id="habit-name-error"></span>
+      </label>
+
+      <label>
+        <span>Description</span>
+        <textarea id="habit-description" class="input" rows="2" maxlength="500"></textarea>
+        <span class="error-message" id="habit-description-error"></span>
+      </label>
+
+      <div class="grid-2">
+        <label>
+          <span>Category</span>
+          <select id="habit-category" class="input">
+            <option value="">None</option>
+            <option value="Study">Study</option>
+            <option value="Health">Health</option>
+            <option value="Practice">Practice</option>
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Target Time (optional)</span>
+          <input id="habit-target-time" class="input" type="time" step="60">
+          <span class="error-message" id="habit-target-time-error"></span>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>Frequency</legend>
+        <div class="row-wrap">
+          <label class="radio-label">
+            <input type="radio" name="habit-frequency-type" value="daily" checked>
+            <span>Daily</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="habit-frequency-type" value="weekdays">
+            <span>Specific Days</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="habit-frequency-type" value="custom">
+            <span>Custom Interval</span>
+          </label>
+        </div>
+
+        <div id="habit-frequency-weekdays" class="frequency-options" style="display:none">
+          <div class="weekday-selector">
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="0">
+              <span>Sun</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="1">
+              <span>Mon</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="2">
+              <span>Tue</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="3">
+              <span>Wed</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="4">
+              <span>Thu</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="5">
+              <span>Fri</span>
+            </label>
+            <label class="weekday-checkbox">
+              <input type="checkbox" value="6">
+              <span>Sat</span>
+            </label>
+          </div>
+          <span class="error-message" id="habit-frequency-weekdays-error"></span>
+        </div>
+
+        <div id="habit-frequency-custom" class="frequency-options" style="display:none">
+          <label>
+            <span>Every</span>
+            <input id="habit-frequency-interval" class="input input-sm" type="number" min="1" max="365" value="1" style="width: 80px; display: inline-block;">
+            <span>days</span>
+          </label>
+          <span class="error-message" id="habit-frequency-interval-error"></span>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Appearance</legend>
+        <div class="grid-2">
+          <div>
+            <span>Color</span>
+            <div class="color-picker">
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#5f9fb0" checked>
+                <span class="color-swatch" style="background-color: #5f9fb0"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#5f9f7c">
+                <span class="color-swatch" style="background-color: #5f9f7c"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#b99a63">
+                <span class="color-swatch" style="background-color: #b99a63"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#b06b73">
+                <span class="color-swatch" style="background-color: #b06b73"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#9f7cb0">
+                <span class="color-swatch" style="background-color: #9f7cb0"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#b08f5f">
+                <span class="color-swatch" style="background-color: #b08f5f"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#b07c9f">
+                <span class="color-swatch" style="background-color: #b07c9f"></span>
+              </label>
+              <label class="color-option">
+                <input type="radio" name="habit-color" value="#949494">
+                <span class="color-swatch" style="background-color: #949494"></span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <span>Icon</span>
+            <div class="icon-picker">
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="📚" checked>
+                <span class="icon-display">📚</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="💪">
+                <span class="icon-display">💪</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🏃">
+                <span class="icon-display">🏃</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🧘">
+                <span class="icon-display">🧘</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🎯">
+                <span class="icon-display">🎯</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="✍️">
+                <span class="icon-display">✍️</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🎨">
+                <span class="icon-display">🎨</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🎵">
+                <span class="icon-display">🎵</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="💻">
+                <span class="icon-display">💻</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="📖">
+                <span class="icon-display">📖</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🌱">
+                <span class="icon-display">🌱</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="☕">
+                <span class="icon-display">☕</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🌙">
+                <span class="icon-display">🌙</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="⭐">
+                <span class="icon-display">⭐</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="🔥">
+                <span class="icon-display">🔥</span>
+              </label>
+              <label class="icon-option">
+                <input type="radio" name="habit-icon" value="✨">
+                <span class="icon-display">✨</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reminders (max 5)</legend>
+        <div id="habit-reminders-list"></div>
+        <div class="row-wrap">
+          <input id="habit-reminder-time" class="input input-sm" type="time" step="60" style="width: 120px;">
+          <button id="habit-add-reminder" class="btn btn-xs" type="button">Add Reminder</button>
+        </div>
+        <span class="error-message" id="habit-reminders-error"></span>
+      </fieldset>
+
+      <div class="row-wrap">
+        <button class="btn btn-primary" type="submit">Save Habit</button>
+        <button id="habit-form-cancel" class="btn" type="button">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="modal-habit-delete" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h2>Delete Habit?</h2>
+    <p id="habit-delete-message">Are you sure you want to delete this habit? This will remove all completion history.</p>
+    <div class="row-wrap">
+      <button id="habit-delete-confirm" class="btn btn-danger" type="button">Delete</button>
+      <button id="habit-delete-cancel" class="btn" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Archive Confirmation Modal -->
+<div id="modal-habit-archive" class="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h2>Archive Habit?</h2>
+    <p id="habit-archive-message">Archive this habit? It will be hidden from daily views but history will be preserved.</p>
+    <div class="row-wrap">
+      <button id="habit-archive-confirm" class="btn btn-primary" type="button">Archive</button>
+      <button id="habit-archive-cancel" class="btn" type="button">Cancel</button>
+    </div>
+  </div>
+</div>

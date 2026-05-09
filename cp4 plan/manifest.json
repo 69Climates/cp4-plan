@@ -1,0 +1,76 @@
+{
+  "name": "CP4",
+  "short_name": "CP4",
+  "description": "Competitive Programming 4 Study Tracker",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111315",
+  "theme_color": "#1d2126",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "72_icon.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "512_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Problem",
+      "url": "./index.html?tab=problems&action=add",
+      "description": "Quickly log a solved problem"
+    },
+    {
+      "name": "Start Pomodoro",
+      "url": "./index.html?tab=timer&mode=pomodoro",
+      "description": "Start a focus session"
+    },
+    {
+      "name": "Week Plan",
+      "url": "./index.html?tab=weekplan",
+      "description": "View this week's study plan"
+    }
+  ],
+  "categories": [
+    "education",
+    "productivity"
+  ]
+}

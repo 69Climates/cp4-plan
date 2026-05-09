@@ -1,0 +1,76 @@
+#week-cards {
+  display: grid;
+  gap: var(--gap);
+}
+
+.week-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.week-header {
+  width: 100%;
+  border: 0;
+  padding: 12px;
+  background: var(--card2);
+  color: var(--text);
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.week-header strong {
+  color: var(--primary);
+}
+
+.week-body {
+  display: none;
+  padding: 12px;
+  background: var(--card);
+  gap: 10px;
+}
+
+.week-card.open .week-body {
+  display: grid;
+}
+
+.day-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: color-mix(in srgb, var(--card2) 65%, transparent);
+  display: grid;
+  gap: 8px;
+}
+
+.section-row {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px;
+  display: grid;
+  gap: 6px;
+  background: color-mix(in srgb, var(--card2) 55%, transparent);
+}
+
+.section-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.section-meta select,
+.section-meta input[type="checkbox"] {
+  transform: scale(1);
+}
+
+.break-banner {
+  border: 1px solid color-mix(in srgb, var(--warning) 45%, var(--border));
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  color: color-mix(in srgb, var(--warning) 90%, var(--text));
+  background: color-mix(in srgb, var(--warning) 8%, var(--card));
+}

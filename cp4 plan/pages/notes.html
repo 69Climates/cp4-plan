@@ -1,0 +1,43 @@
+<section class="page" id="notes-page">
+  <header class="page-header">
+    <h1 class="page-title">Notes</h1>
+    <div class="row-wrap">
+      <button id="open-doom-notes" class="btn" type="button">Open DOOM NOTES</button>
+      <span id="capture-count-badge" class="capture-badge">0</span>
+    </div>
+  </header>
+
+  <div id="notes-subtabs">
+    <button class="notes-tab-btn active" data-notes-tab="quick" type="button">Quick Notes</button>
+    <button class="notes-tab-btn" data-notes-tab="mistakes" type="button">Mistake Log</button>
+    <button class="notes-tab-btn" data-notes-tab="templates" type="button">Templates</button>
+    <button class="notes-tab-btn" data-notes-tab="captures" type="button">Captures</button>
+  </div>
+
+  <div id="notes-panels">
+    <section id="notes-tab-quick" class="notes-panel show card">
+      <form id="quick-note-form" class="row-wrap">
+        <input id="quick-note-title" class="input" placeholder="Note title" required>
+        <button class="btn btn-primary" type="submit">Add</button>
+      </form>
+      <div id="quick-notes-list"></div>
+    </section>
+
+    <section id="notes-tab-mistakes" class="notes-panel card">
+      <form id="mistake-form" class="row-wrap">
+        <input id="mistake-title" class="input" placeholder="Mistake" required>
+        <button class="btn btn-primary" type="submit">Add mistake</button>
+      </form>
+      <div id="mistake-list"></div>
+    </section>
+
+    <section id="notes-tab-templates" class="notes-panel card">
+      <div id="template-list"></div>
+    </section>
+
+    <section id="notes-tab-captures" class="notes-panel card">
+      <h3>Quick Captures Inbox</h3>
+      <div id="capture-list"></div>
+    </section>
+  </div>
+</section>

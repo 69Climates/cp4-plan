@@ -1,0 +1,71 @@
+#notes-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.notes-tab-btn {
+  border: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--muted);
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.notes-tab-btn.active {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+}
+
+.notes-panel {
+  display: none;
+}
+
+.notes-panel.show {
+  display: grid;
+  gap: 10px;
+}
+
+.template-slot {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card2);
+}
+
+.template-header {
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  background: var(--card2);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.template-header strong {
+  color: var(--primary);
+}
+
+.template-body {
+  display: none;
+  padding: 10px;
+  background: var(--card);
+  gap: 8px;
+}
+
+.template-slot.open .template-body {
+  display: grid;
+}
+
+.capture-badge {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  min-width: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 10%, var(--card));
+}
